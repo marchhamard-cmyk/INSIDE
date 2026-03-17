@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INSIDE — Hoodie Résilience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --black-2: #111111;
+    --black-3: #1a1a1a;
+    --bone: #F2EDE4;
+    --bone-2: #E8E3DA;
+    --bone-3: #D4CEC5;
+    --grey: #888780;
+    --grey-light: #BFBDB8;
+    --white: #FAFAF8;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--sans);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { display: block; width: 100%; object-fit: cover; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(10,10,10,.95), transparent);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 13px;
+    letter-spacing: .4em;
+    color: rgba(255,255,255,.5);
+    text-decoration: none;
+  }
+  .nav-right {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  .nav-link {
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.3);
+    text-decoration: none;
+  }
+  .nav-cart {
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4);
+    border: 1px solid rgba(255,255,255,.15);
+    padding: 6px 14px;
+    text-decoration: none;
+    transition: all .2s;
+  }
+  .nav-cart:hover { border-color: rgba(255,255,255,.4); color: var(--white); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 100svh;
+    min-height: 600px;
+    overflow: hidden;
+  }
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: brightness(.75);
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 30%,
+      rgba(10,10,10,.3) 60%,
+      rgba(10,10,10,.85) 100%
+    );
+  }
+  .hero-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 24px 48px;
+  }
+  .hero-label {
+    font-size: 9px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.35);
+    margin-bottom: 12px;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 8vw, 72px);
+    font-weight: 400;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .hero-subtitle {
+    font-family: var(--serif);
+    font-size: clamp(14px, 3vw, 18px);
+    font-style: italic;
+    color: rgba(255,255,255,.45);
+    margin-bottom: 32px;
+    letter-spacing: .02em;
+  }
+  .hero-bottom {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .hero-price {
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--bone);
+    letter-spacing: .05em;
+  }
+  .btn-primary {
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    padding: 14px 32px;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+  }
+  .btn-primary:hover { background: var(--bone); }
+  .btn-ghost {
+    background: transparent;
+    color: rgba(255,255,255,.5);
+    border: 1px solid rgba(255,255,255,.2);
+    padding: 14px 32px;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all .2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,.5); color: var(--white); }
+
+  /* ── PRODUCT SECTION ── */
+  .product-section {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* ── GALLERY ── */
+  .gallery {
+    background: var(--black-2);
+  }
+  .gallery-main {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+  .gallery-main img {
+    height: 100%;
+    transition: transform .6s ease;
+  }
+  .gallery-main:hover img { transform: scale(1.02); }
+  .gallery-thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--black);
+  }
+  .gallery-thumb {
+    aspect-ratio: 1;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: .6;
+    transition: opacity .2s;
+  }
+  .gallery-thumb.active,
+  .gallery-thumb:hover { opacity: 1; }
+  .gallery-thumb img { height: 100%; }
+
+  /* ── PRODUCT INFO ── */
+  .product-info {
+    padding: 40px 24px;
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  .product-info-label {
+    font-size: 9px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.25);
+    margin-bottom: 16px;
+  }
+  .product-info-name {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .product-info-price {
+    font-size: 20px;
+    color: rgba(255,255,255,.45);
+    margin-bottom: 28px;
+    letter-spacing: .05em;
+  }
+
+  /* Phrase */
+  .phrase-block {
+    border-left: 1px solid rgba(255,255,255,.12);
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+  .phrase-text {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-style: italic;
+    color: rgba(255,255,255,.8);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+  .phrase-territory {
+    font-size: 8px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.22);
+  }
+
+  /* Size */
+  .size-label {
+    font-size: 9px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.3);
+    margin-bottom: 12px;
+    margin-top: 28px;
+  }
+  .size-grid {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .size-btn {
+    border: 1px solid rgba(255,255,255,.15);
+    background: transparent;
+    color: rgba(255,255,255,.45);
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: .08em;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .size-btn:hover,
+  .size-btn.active {
+    border-color: rgba(255,255,255,.5);
+    color: var(--white);
+    background: rgba(255,255,255,.05);
+  }
+  .size-guide {
+    font-size: 10px;
+    color: rgba(255,255,255,.2);
+    text-decoration: underline;
+    cursor: pointer;
+    margin-bottom: 24px;
+    display: inline-block;
+  }
+
+  /* CTA */
+  .cta-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn-full {
+    width: 100%;
+    padding: 16px;
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-align: center;
+  }
+  .product-note {
+    font-size: 10px;
+    color: rgba(255,255,255,.2);
+    text-align: center;
+    letter-spacing: .05em;
+    margin-top: 4px;
+  }
+
+  /* ── THE MEANING ── */
+  .meaning-section {
+    background: var(--black-2);
+    padding: 64px 24px;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  .meaning-label {
+    font-size: 9px;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.18);
+    margin-bottom: 28px;
+  }
+  .meaning-phrase {
+    font-family: var(--serif);
+    font-size: clamp(18px, 4vw, 24px);
+    font-style: italic;
+    color: rgba(255,255,255,.88);
+    line-height: 1.45;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .meaning-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .meaning-p {
+    font-size: 13px;
+    line-height: 1.9;
+    color: rgba(255,255,255,.4);
+    font-weight: 300;
+  }
+  .meaning-p.strong {
+    color: rgba(255,255,255,.65);
+  }
+  .meaning-footer {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    font-size: 9px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.15);
+  }
+
+  /* ── PRODUCT DETAILS ── */
+  .details-section {
+    padding: 48px 24px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    background: var(--black);
+  }
+  .details-label {
+    font-size: 9px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.2);
+    margin-bottom: 24px;
+  }
+  .details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .detail-item {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .detail-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.25);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .detail-text {
+    font-size: 12px;
+    color: rgba(255,255,255,.4);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  /* Texture strip */
+  .texture-strip {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+  }
+  .texture-strip img {
+    height: 100%;
+    object-position: center;
+    filter: brightness(.6);
+  }
+  .texture-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .texture-text {
+    font-family: var(--serif);
+    font-size: 11px;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.35);
+  }
+
+  /* ── MANIFESTO ── */
+  .manifesto-section {
+    position: relative;
+    min-height: 480px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .manifesto-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(.35);
+  }
+  .manifesto-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 64px 24px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .manifesto-eyebrow {
+    font-size: 9px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.25);
+    margin-bottom: 24px;
+  }
+  .manifesto-quote {
+    font-family: var(--serif);
+    font-size: clamp(22px, 5vw, 40px);
+    font-style: italic;
+    font-weight: 400;
+    color: rgba(255,255,255,.9);
+    line-height: 1.3;
+    margin-bottom: 24px;
+  }
+  .manifesto-divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,.2);
+    margin: 0 auto 20px;
+  }
+  .manifesto-sub {
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.2);
+  }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    background: var(--black-2);
+    padding: 64px 24px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  .final-cta-title {
+    font-family: var(--serif);
+    font-size: clamp(20px, 4vw, 32px);
+    font-style: italic;
+    color: rgba(255,255,255,.6);
+    margin-bottom: 8px;
+  }
+  .final-cta-price {
+    font-size: 14px;
+    color: rgba(255,255,255,.25);
+    letter-spacing: .1em;
+    margin-bottom: 32px;
+  }
+  .final-cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 24px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 12px;
+    letter-spacing: .35em;
+    color: rgba(255,255,255,.2);
+  }
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+  .footer-link {
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.15);
+    text-decoration: none;
+  }
+  .footer-social {
+    font-size: 9px;
+    letter-spacing: .1em;
+    color: rgba(255,255,255,.1);
+  }
+
+  .product-micro {
+    font-family: var(--serif);
+    font-size: 11px;
+    font-style: italic;
+    color: rgba(255,255,255,.18);
+    text-align: center;
+    letter-spacing: .04em;
+    margin-top: 2px;
+  }
+
+  /* ── PROTOCOL ── */
+  .protocol-section {
+    background: var(--black-3);
+    padding: 64px 24px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .protocol-number {
+    font-size: 9px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.15);
+    margin-bottom: 6px;
+  }
+  .protocol-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 400;
+    color: rgba(255,255,255,.9);
+    letter-spacing: .08em;
+    line-height: 1.1;
+    margin-bottom: 32px;
+  }
+  .protocol-divider {
+    width: 32px;
+    height: 1px;
+    background: rgba(255,255,255,.12);
+    margin-bottom: 28px;
+  }
+  .protocol-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 480px;
+    margin-bottom: 32px;
+  }
+  .protocol-text {
+    font-size: 13px;
+    line-height: 1.9;
+    color: rgba(255,255,255,.45);
+    font-weight: 300;
+  }
+  .protocol-signature {
+    font-size: 9px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.18);
+  }
+
+  @media (min-width: 768px) {
+    .protocol-section { padding: 80px 48px; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * {
+    animation: fadeUp .8s ease both;
+  }
+  .hero-label   { animation-delay: .1s; }
+  .hero-title   { animation-delay: .2s; }
+  .hero-subtitle { animation-delay: .3s; }
+  .hero-bottom  { animation-delay: .4s; }
+
+  /* ── DESKTOP ── */
+  @media (min-width: 768px) {
+    nav { padding: 24px 48px; }
+
+    .product-section {
+      grid-template-columns: 1fr 1fr;
+      min-height: 80vh;
+    }
+
+    .gallery-main { aspect-ratio: 3/4; height: 100%; }
+    .gallery-main img { height: 100%; }
+
+    .product-info {
+      padding: 64px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-top: none;
+      border-left: 1px solid rgba(255,255,255,.06);
+    }
+
+    .meaning-section { padding: 80px 48px; max-width: 640px; }
+    .details-section { padding: 64px 48px; }
+    .manifesto-content { padding: 80px 48px; }
+    .final-cta { padding: 80px 48px; }
+    .hero-content { padding: 0 48px 64px; max-width: 640px; }
+
+    .final-cta-buttons {
+      flex-direction: row;
+      justify-content: center;
+      max-width: none;
+    }
+    .final-cta-buttons .btn-full {
+      width: auto;
+      min-width: 220px;
+    }
+
+    footer { flex-direction: row; justify-content: space-between; padding: 32px 48px; }
+  }
+
+  @media (min-width: 1200px) {
+    .product-section { grid-template-columns: 55% 45%; }
+    .gallery-main { aspect-ratio: auto; }
+    .meaning-section { max-width: 720px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">INSIDE</a>
+  <div class="nav-right">
+    <a href="#" class="nav-link">Collection</a>
+    <a href="#" class="nav-link">Manifeste</a>
+    <a href="#" class="nav-cart">Panier (0)</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-img" src="images/hoodie-lifestyle.png" alt="INSIDE Hoodie Résilience — lifestyle">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-label">INSIDE · Collection 01</p>
+    <h1 class="hero-title">"La chute fait partie<br>du protocole."</h1>
+    <p class="hero-subtitle">Hoodie — Résilience</p>
+    <div class="hero-bottom">
+      <span class="hero-price">75 €</span>
+      <a href="#product" class="btn-primary">OWN THE PROTOCOL</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT SECTION -->
+<section class="product-section" id="product">
+
+  <!-- GALLERY -->
+  <div class="gallery">
+    <div class="gallery-main">
+      <img src="images/hoodie-front.png" alt="INSIDE Hoodie — face" id="main-img">
+    </div>
+    <div class="gallery-thumbs">
+      <div class="gallery-thumb active" onclick="setImg('hoodie-front.png', this)">
+        <img src="images/hoodie-front.png" alt="Face">
+      </div>
+      <div class="gallery-thumb" onclick="setImg('hoodie-back.png', this)">
+        <img src="images/hoodie-back.png" alt="Dos">
+      </div>
+      <div class="gallery-thumb" onclick="setImg('hoodie-lifestyle.png', this)">
+        <img src="images/hoodie-lifestyle.png" alt="Lifestyle">
+      </div>
+    </div>
+  </div>
+
+  <!-- INFO -->
+  <div class="product-info">
+    <p class="product-info-label">Sport de Haut Niveau · Résilience</p>
+    <h2 class="product-info-name">Hoodie<br>Résilience</h2>
+    <p class="product-info-price">75 €</p>
+
+    <div class="phrase-block">
+      <p class="phrase-text">La chute fait partie du protocole.</p>
+      <p class="phrase-territory">Résilience · Imprimé au dos</p>
+    </div>
+
+    <p class="size-label">Taille</p>
+    <div class="size-grid">
+      <button class="size-btn" onclick="selectSize(this)">XS</button>
+      <button class="size-btn" onclick="selectSize(this)">S</button>
+      <button class="size-btn active" onclick="selectSize(this)">M</button>
+      <button class="size-btn" onclick="selectSize(this)">L</button>
+      <button class="size-btn" onclick="selectSize(this)">XL</button>
+      <button class="size-btn" onclick="selectSize(this)">XXL</button>
+    </div>
+    <span class="size-guide">Guide des tailles</span>
+
+    <div class="cta-block">
+      <button class="btn-primary btn-full">ENTER THE PROTOCOL</button>
+      <p class="product-note">Livraison 6–13 jours · Retours gratuits</p>
+      <p class="product-micro">Every protocol begins with a fall.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- THE MEANING -->
+<section class="meaning-section">
+  <p class="meaning-label">The Meaning</p>
+  <blockquote class="meaning-phrase">
+    "La chute fait partie du protocole."
+  </blockquote>
+  <div class="meaning-body">
+    <p class="meaning-p">Dans le sport de haut niveau, la chute n'est pas un accident. Elle est prévue. Intégrée. Travaillée à l'entraînement comme n'importe quelle autre compétence.</p>
+    <p class="meaning-p strong">Les meilleurs tombent plus que les autres. Parce qu'ils tentent plus. Parce qu'ils poussent plus loin. La chute est la preuve de l'engagement — pas de l'échec.</p>
+    <p class="meaning-p">Ce que le monde ordinaire appelle "erreur", le sport de haut niveau l'appelle "données". Ce que le monde ordinaire appelle "défaite", le sport de haut niveau l'appelle "séquence".</p>
+    <p class="meaning-p strong">Le protocole ne s'arrête pas à la chute. Il la contient.</p>
+  </div>
+  <p class="meaning-footer">Résilience · Collection 01 · INSIDE Official</p>
+</section>
+
+<!-- PROTOCOL -->
+<section class="protocol-section">
+  <p class="protocol-number">Protocole 01</p>
+  <h2 class="protocol-title">Résilience</h2>
+  <div class="protocol-divider"></div>
+  <div class="protocol-body">
+    <p class="protocol-text">Dans le sport de haut niveau, la chute n'est pas une anomalie.</p>
+    <p class="protocol-text">Elle est une étape prévue dans la progression.</p>
+    <p class="protocol-text">Ce hoodie appartient au protocole.</p>
+  </div>
+  <p class="protocol-signature">INSIDE · Mental Protocols</p>
+</section>
+
+<!-- PRODUCT DETAILS -->
+<section class="details-section">
+  <p class="details-label">Le produit</p>
+  <div class="details-grid">
+    <div class="detail-item">
+      <div class="detail-dot"></div>
+      <span class="detail-text">Coton premium · 380g</span>
+    </div>
+    <div class="detail-item">
+      <div class="detail-dot"></div>
+      <span class="detail-text">Coupe oversize athlétique</span>
+    </div>
+    <div class="detail-item">
+      <div class="detail-dot"></div>
+      <span class="detail-text">Broderie INSIDE · poitrine gauche</span>
+    </div>
+    <div class="detail-item">
+      <div class="detail-dot"></div>
+      <span class="detail-text">Impression dos · phrase sérigraphiée</span>
+    </div>
+    <div class="detail-item">
+      <div class="detail-dot"></div>
+      <span class="detail-text">Coloris écru · intemporel</span>
+    </div>
+    <div class="detail-item">
+      <div class="detail-dot"></div>
+      <span class="detail-text">Livraison Europe · 6–13 jours</span>
+    </div>
+    <div class="detail-item">
+      <div class="detail-dot"></div>
+      <span class="detail-text">Collection limitée · Drop 01</span>
+    </div>
+    <div class="detail-item">
+      <div class="detail-dot"></div>
+      <span class="detail-text">Étiquette intérieure · territoire</span>
+    </div>
+  </div>
+</section>
+
+<!-- TEXTURE STRIP -->
+<div class="texture-strip">
+  <img src="images/hoodie-texture.png" alt="Texture hoodie INSIDE">
+  <div class="texture-overlay">
+    <span class="texture-text">Fabriqué pour durer</span>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<section class="manifesto-section">
+  <img class="manifesto-bg" src="images/manifesto-resilience.png" alt="INSIDE — Résilience">
+  <div class="manifesto-content">
+    <p class="manifesto-eyebrow">INSIDE · Manifeste</p>
+    <blockquote class="manifesto-quote">
+      "The fall is part<br>of the protocol."
+    </blockquote>
+    <div class="manifesto-divider"></div>
+    <p class="manifesto-sub">Sport de Haut Niveau · Résilience</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <p class="final-cta-title">Hoodie Résilience</p>
+  <p class="final-cta-price">75 € · Écru · Collection 01</p>
+  <div class="final-cta-buttons">
+    <button class="btn-primary btn-full">OWN THE PROTOCOL</button>
+    <a href="#" class="btn-ghost btn-full">Voir la collection</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">INSIDE</span>
+  <div class="footer-links">
+    <a href="#" class="footer-link">Collection</a>
+    <a href="#" class="footer-link">Manifeste</a>
+    <a href="#" class="footer-link">Contact</a>
+  </div>
+  <span class="footer-social">@inside.shn · inside-official.com</span>
+</footer>
+
+<script>
+function setImg(src, thumb) {
+  document.getElementById('main-img').src = src;
+  document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+  thumb.classList.add('active');
+}
+function selectSize(btn) {
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
